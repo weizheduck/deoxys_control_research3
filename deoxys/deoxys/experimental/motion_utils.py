@@ -137,6 +137,7 @@ def follow_joint_traj(
                 action = action + [1.0]
             else:
                 action = action + [-1.0]
+            print(action)
         current_joint_pos = np.array(robot_interface.last_q)
         robot_interface.control(
             controller_type="JOINT_IMPEDANCE",
