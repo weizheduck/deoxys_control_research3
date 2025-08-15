@@ -57,7 +57,10 @@ def main():
         config = json.loads(demo_file["data"].attrs["config"])
 
         joint_sequence = demo_file["data/joint_states"]
+        print(f"joint:{len(joint_sequence)}")
         action_sequence = demo_file["data/actions"]
+        print(f"action:{len(action_sequence)}")
+        
 
     # Initialize franka interface
     device = SpaceMouse(vendor_id=args.vendor_id, product_id=args.product_id)
@@ -81,7 +84,8 @@ def main():
                 controller_cfg=EasyDict(config["controller_cfg"]),
             )
     elif config["controller_type"] == "JOINT_IMPEDANCE":
-        follow_joint_traj(robot_interface, joint_sequence)
+        follow_joint_traj(robot_interface, action_sequence)
+
     logger.info("Finish replaying.")
     robot_interface.close()
 
