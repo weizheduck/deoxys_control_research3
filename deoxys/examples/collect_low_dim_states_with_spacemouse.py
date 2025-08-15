@@ -116,6 +116,8 @@ def main():
         elif controller_type == "JOINT_IMPEDANCE":
             action[:7] = robot_interface.last_q.tolist()
         logger.info(action)
+        print(f"Grasp: {grasp}")
+
 
         robot_interface.control(
             controller_type=controller_type,
@@ -135,6 +137,7 @@ def main():
         # Record ee pose,  joints
 
         data["action"].append(action)
+        data.setdefault("gripper_cmd",[]).append(action[-1])
 
         state_dict = {
             "ee_states": np.array(last_state.O_T_EE),
